@@ -23,6 +23,11 @@ To build for production:
 > bun run build
 ```
 
+Prerequisites
+-------------
+* Node: https://nodejs.org/en/download
+* Bun: https://bun.com/docs/installation
+
 
 Facilitator guide
 -----------------

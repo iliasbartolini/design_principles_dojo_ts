@@ -72,7 +72,7 @@ export class World {
 
 // Seeds the Glider pattern matching GameRunner.java initialization:
 // locations (7,1),(7,2),(7,3),(8,3),(9,2)
-export function createGliderWorld(): World {
+export function initGliderWorld(): World {
   return new World()
     .withLiving(at(7, 1))
     .withLiving(at(7, 2))

@@ -1,37 +1,31 @@
 import { useCallback, useState } from 'react';
-import { World, DEFAULT_WIDTH, DEFAULT_HEIGHT, createGliderWorld } from '../core/World';
+import { World, initGliderWorld } from '../core/World';
 import { IntroScreen } from './IntroScreen';
 import { GameScreen } from './GameScreen';
 
-// Screen state machine replacing Java's Screen interface + getNextScreen() pattern.
-// Java used object polymorphism; here a string union + useState achieves the same transitions.
+// Rudimentary switch between IntroScreen and GameScreen.
 type ScreenName = 'intro' | 'game';
-
-const TILE_SIZE = 48;
 
 export function GameCanvas() {
   const [screen, setScreen] = useState<ScreenName>('intro');
-  const [world, setWorld] = useState<World>(() => createGliderWorld());
+  const [world, setWorld] = useState<World>(() => initGliderWorld());
 
-  // Mirrors: IntroScreen.getNextScreen() returning GameScreen when startGame = true
   const handleStart = useCallback(() => setScreen('game'), []);
 
   // Mirrors: GameScreen.getNextScreen() calling world.advance() and returning self
   // useCallback ensures stable reference so GameScreen's setInterval isn't re-created
   const handleAdvance = useCallback((next: World) => setWorld(next), []);
 
+  const renderScreen = () => {
+    if (screen === 'intro') {
+      return <IntroScreen onStart={handleStart} />;
+    }
+    return <GameScreen world={world} onAdvance={handleAdvance} />;
+  };
+
   return (
-    <div
-      style={{
-        width: DEFAULT_WIDTH * TILE_SIZE,
-        height: DEFAULT_HEIGHT * TILE_SIZE,
-        overflow: 'hidden',
-      }}
-    >
-      {screen === 'intro' && <IntroScreen onStart={handleStart} />}
-      {screen === 'game' && (
-        <GameScreen world={world} onAdvance={handleAdvance} />
-      )}
+    <div>
+      {renderScreen()}
     </div>
   );
 }

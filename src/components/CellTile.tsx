@@ -14,12 +14,16 @@ export function CellTile({ alive, x, y }: CellTileProps) {
       data-testid={`cell-${x}-${y}`}
       data-alive={alive}
       style={{
+        backgroundColor: '#ffffff',
+      }}
+    ><div
+      style={{
         width: TILE_SIZE,
         height: TILE_SIZE,
         backgroundColor: alive ? '#000000' : '#ffffff',
-        boxSizing: 'border-box',
-        border: '1px solid #e0e0e0',
+        borderRadius: '50%',
       }}
-    />
+      ></div>
+    </div>
   );
 }
