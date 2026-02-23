@@ -10,12 +10,12 @@ To install dependencies:
 
 To run all tests:
 ```
-> bun run test
+> bun test
 ```
 
 To run the application:
 ```
-> bun run dev
+> bun dev
 ```
 
 To build for production:

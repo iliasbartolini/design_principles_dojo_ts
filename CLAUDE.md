@@ -5,18 +5,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-bun run dev          # start Vite dev server
-bun run build        # tsc type-check + Vite production build
-bun run test         # run all tests once (Vitest)
-bun run test:watch   # run tests in watch mode
-bun run preview      # preview production build
+bun dev            # start Vite dev server
+bun run build      # bunldes and run typecheck
+bun test           # run all tests once (bun test)
+bun test --watch   # run tests in watch mode
 ```
-
-> **Note:** Do NOT use `bun test` — it invokes Bun's built-in test runner, which has no jsdom environment. Component tests will fail with `document is not defined`. Always use `bun run test` to go through Vitest.
 
 Run a single test file:
 ```bash
-bunx vitest run src/tests/core/World.test.ts
+bun test src/tests/core/World.test.ts
 ```
 
 ## Architecture
@@ -48,8 +45,12 @@ All game logic lives here with no React dependencies.
 
 ### Testing
 
-Tests live in `src/tests/` mirroring the `src/` structure. Vitest globals (`describe`, `it`, `expect`, etc.) are enabled via `tsconfig.json` — no imports needed in test files (though some files import them explicitly). `src/tests/setup.ts` imports `@testing-library/jest-dom`.
+Tests live in `src/tests/` mirroring the `src/` structure. Test globals (`describe`, `it`, `expect`, etc.) are imported explicitly from `bun:test`. `src/tests/setup.ts` registers `@happy-dom/global-registrator` (DOM environment) and `@testing-library/jest-dom` (custom matchers); it runs automatically via `bunfig.toml` preload.
 
-For component tests that involve the game loop, use `vi.useFakeTimers()` in `beforeEach` and `vi.useRealTimers()` + `cleanup()` in `afterEach`. Advance time with `act(() => { vi.advanceTimersByTime(250); })`.
+`src/bun-matchers.d.ts` references `@testing-library/jest-dom`'s `types/bun.d.ts` via a triple-slash directive, which augments `bun:test`'s `Matchers` interface so that `toBeInTheDocument`, `toHaveAttribute`, etc. type-check correctly.
+
+For component tests that involve the game loop, use `jest.useFakeTimers()` in `beforeEach` and `jest.useRealTimers()` + `cleanup()` in `afterEach`. Advance time with `act(() => { jest.advanceTimersByTime(250); })`.
+
+`jest` is imported from `bun:test` and provides the same fake-timer API as Vitest's `vi`.
 
 Cell elements are queried in tests via `data-testid` (`/^cell-/`) and `data-alive` attributes.

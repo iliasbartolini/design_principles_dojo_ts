@@ -1,14 +1,14 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, jest, beforeEach, afterEach } from 'bun:test';
 import { render, screen, fireEvent, act, cleanup } from '@testing-library/react';
 import { GameCanvas } from '../../components/GameCanvas';
 
 describe('GameCanvas', () => {
   beforeEach(() => {
-    vi.useFakeTimers();
+    jest.useFakeTimers();
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    jest.useRealTimers();
     cleanup();
   });
 
@@ -38,7 +38,7 @@ describe('GameCanvas', () => {
   it('game grid continues to be rendered after a tick on game screen', () => {
     render(<GameCanvas />);
     fireEvent.click(screen.getByRole('img'));
-    act(() => { vi.advanceTimersByTime(250); });
+    act(() => { jest.advanceTimersByTime(250); });
     expect(screen.getAllByTestId(/^cell-/)).toHaveLength(100);
   });
 });

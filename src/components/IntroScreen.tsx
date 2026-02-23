@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+import intro from '../../assets/intro.png';
+
 // Mirrors IntroScreen.java: shows intro image, any click or keypress triggers transition
 interface IntroScreenProps {
   onStart: () => void;
@@ -19,7 +21,7 @@ export function IntroScreen({ onStart }: IntroScreenProps) {
       style={{ cursor: 'pointer', width: '100%', height: '100%' }}
     >
       <img
-        src="/intro.png"
+        src={intro}
         alt="Conway's Game of Life"
         style={{ width: '100%', height: 'auto', display: 'block' }}
       />
