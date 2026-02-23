@@ -20,3 +20,5 @@ dist/
 *.ntvs*
 *.njsproj
 *.sln
+
+.claude/
