@@ -1,7 +1,7 @@
 // Direct port of WorldTest.java
-// Each Java @Test method maps to a bun:test it() block.
+// Each Java @Test method maps to a vitest it() block.
 // @Before setUp() maps to beforeEach().
-import { describe, it, expect, beforeEach } from 'bun:test';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { World } from '../../core/World';
 import { at } from '../../core/Location';
 
