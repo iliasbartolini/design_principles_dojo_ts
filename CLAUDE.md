@@ -5,18 +5,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-bun run dev          # start Vite dev server
-bun run build        # tsc type-check + Vite production build
-bun run test         # run all tests once (Vitest)
-bun run test:watch   # run tests in watch mode
-bun run preview      # preview production build
+npm run dev          # start Vite dev server
+npm run build        # tsc type-check + Vite production build
+npm run test         # run all tests once (Vitest)
+npm run test:watch   # run tests in watch mode
+npm run preview      # preview production build
 ```
-
-> **Note:** Do NOT use `bun test` — it invokes Bun's built-in test runner, which has no jsdom environment. Component tests will fail with `document is not defined`. Always use `bun run test` to go through Vitest.
 
 Run a single test file:
 ```bash
-bunx vitest run src/tests/core/World.test.ts
+npx vitest run src/tests/core/World.test.ts
 ```
 
 ## Architecture
